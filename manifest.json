@@ -1,6 +1,6 @@
 {
-  "name": "Preact PWA",
-  "short_name": "Preact PWA",
+  "name": "Speed Reading PWA",
+  "short_name": "SR PWA",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
