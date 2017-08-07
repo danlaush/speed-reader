@@ -1,0 +1,19 @@
+.progress-bar {
+	width: 100%;
+	background-color: $gray;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.progress-bar__current {
+	height: 10px;
+	width: 100%;	
+	background-color: $color-secondary;
+	transform: scaleX(0.5);
+    transform-origin: left;
+    transition: transform 100ms linear;
+
+	span {
+		position: absolute !important;
+		clip: rect(1px, 1px, 1px, 1px);
+	}
+}
