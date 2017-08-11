@@ -5,6 +5,7 @@ import { Slider } from './components/slider';
 import { Word } from './components/word';
 import { PlayControls } from './components/playControls';
 import { ProgressBar } from './components/progressBar';
+import { TextArea } from './components/textArea';
 
 export default class App extends Component {
 	state = {
@@ -19,6 +20,7 @@ export default class App extends Component {
 		super();
 		this.changeSpeed = this.changeSpeed.bind(this);
 		this.reset = this.reset.bind(this);
+		this.updateText = this.updateText.bind(this);
 	}
 
 	componentDidMount() {
@@ -49,6 +51,14 @@ export default class App extends Component {
 		}, (60/Math.abs(this.state.speed))*1000);
 	}
 
+	updateText(event) {
+		this.reset();
+		this.setState({text: event.target.value});
+		this.setState({
+			textNodes: this.state.text.split(/[ ]+/).filter(Boolean)
+		});
+	}
+
 	reset() {
 		this.setState({ 
 			activeNode: 0,
@@ -71,6 +81,10 @@ export default class App extends Component {
 						speed={this.state.speed} 
 						onChange={this.changeSpeed}
 						reset={this.reset}
+						/>
+					<TextArea
+						text={this.state.text}
+						updateText={this.updateText}
 						/>
 				</main>
 			</div>
