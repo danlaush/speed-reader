@@ -31,7 +31,6 @@ export default class App extends Component {
 	}
 
 	changeSpeed(event) {
-		console.log('changeSpeed()');
 		let value = event.target.value,
 		oldSpeed = this.state.speed;
 		this.setState({speed:value});
@@ -39,8 +38,6 @@ export default class App extends Component {
 	}
 
 	updateWord() {
-		console.log('updateWord()');
-
 		setTimeout(() => {
 			if(this.state.speed<0) {
 				if (this.state.activeNode-1 >= 0)
@@ -109,12 +106,10 @@ export default class App extends Component {
 
 // Thanks Remy Sharp
 function throttle(fn, threshhold, scope) {
-	console.log('throttle()');
 	threshhold || (threshhold = 250);
 	var last,
 		deferTimer;
 	return function () {
-		console.log('throttle closure');
 		var context = scope || this;
 
 		var now = +new Date,
