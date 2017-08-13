@@ -1,5 +1,16 @@
-.slider__control {
-	display: block;
+.slider {
+
 	width: 50%;
 	margin: 0 auto;
+
+	background: #a32020; /* Old browsers */
+	background: -moz-linear-gradient(left, #a32020 0%, #dde02c 25%, #6cce27 50%, #dde02c 75%, #a32020 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left, #a32020 0%,#dde02c 25%,#6cce27 50%,#dde02c 75%,#a32020 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right, #a32020 0%,#dde02c 25%,#6cce27 50%,#dde02c 75%,#a32020 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a32020', endColorstr='#a32020',GradientType=1 ); /* IE6-9 */
+}
+
+.slider__control {
+	display: block;
+	width: 100%;
 }
