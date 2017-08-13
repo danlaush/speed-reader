@@ -6,6 +6,7 @@ import { Word } from './components/word';
 import { PlayControls } from './components/playControls';
 import { ProgressBar } from './components/progressBar';
 import { TextArea } from './components/textArea';
+import queryString from 'query-string';
 
 export default class App extends Component {
 	state = {
@@ -30,6 +31,11 @@ export default class App extends Component {
 		this.setState({
 			textNodes: this.state.text.split(/[ ]+/).filter(Boolean)
 		});
+
+		this.queryParams = queryString.parse(location.search);
+		if(typeof this.queryParams.url === 'string') {
+			this.loadUrl(this.queryParams.url);
+		}
 	}
 
 	changeSpeed(event) {
@@ -57,12 +63,17 @@ export default class App extends Component {
 		}, (60/Math.abs(this.state.speed))*1000);
 	}
 
-	updateText(event) {
+	updateText(text) {
 		this.reset();
-		this.setState({text: event.target.value});
+		this.setState({text: text});
 		this.setState({
 			textNodes: this.state.text.split(/[-\n\s]+/).filter(Boolean)
 		});
+
+	}
+
+	updateTextArea(event) {
+		this.updateText(event.target.value);
 	}
 
 	start() {
@@ -89,6 +100,22 @@ export default class App extends Component {
 		clearTimeout(this.timer);
 	}
 
+	loadUrl(urlString) {
+		let url = new URL(urlString)
+		let corsProxyUrl = 'https://cors-anywhere.herokuapp.com/';
+		var self = this;
+
+		if(url.host == 'medium.com') {
+			return fetch(corsProxyUrl + url).then(function(res) {
+				return res.text();
+			}).then(function(html) {
+				let page = new DOMParser().parseFromString(html, 'text/html');
+				let text = page.body.querySelector('.postArticle-content').textContent;
+				self.updateText(text);
+			});
+		}
+	}
+
 	render(props) {
 		return (
 			<div class="app">
@@ -112,7 +139,7 @@ export default class App extends Component {
 					/>
 					<TextArea
 						text={this.state.text}
-						updateText={this.updateText}
+						updateText={this.updateTextArea}
 					/>
 				</main>
 			</div>
