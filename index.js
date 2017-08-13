@@ -20,6 +20,7 @@ export default class App extends Component {
 		super();
 		this.timer;
 		this.changeSpeed = throttle(this.changeSpeed.bind(this),100);
+		this.start = this.start.bind(this);
 		this.stop = this.stop.bind(this);
 		this.reset = this.reset.bind(this);
 		this.updateText = this.updateText.bind(this);
@@ -64,6 +65,15 @@ export default class App extends Component {
 		});
 	}
 
+	start() {
+		if(this.state.speed == 0) {
+			this.setState({
+				speed: 200
+			});
+			this.updateWord();
+		}
+	}
+
 	stop() {
 		this.setState({ 
 			speed: 0
@@ -95,9 +105,10 @@ export default class App extends Component {
 						onChange={this.changeSpeed}
 					/>
 					<PlayControls 
-						speed={this.state.speed} 
+						start={this.start}
 						stop={this.stop}
 						reset={this.reset}
+						speed={this.state.speed} 
 					/>
 					<TextArea
 						text={this.state.text}
