@@ -1,6 +1,6 @@
 import './style';
 import { Component } from 'preact';
-import { Header } from './components/header';
+import Header from './components/header';
 import { Slider } from './components/slider';
 import { Word } from './components/word';
 import { PlayControls } from './components/playControls';
@@ -81,7 +81,7 @@ export default class App extends Component {
 
 	render(props) {
 		return (
-			<div>
+			<div class="app">
 				<Header />
 				<main class="main">
 					<ProgressBar 

@@ -2,8 +2,11 @@ $color-primary: lightseagreen;
 $color-secondary: crimson;
 $gray: silver;
 
+$width: 600px;
+
 html {
   box-sizing: border-box;
+	height: 100%;
 }
 
 *, *:before, *:after {
@@ -11,18 +14,27 @@ html {
 }
 
 body {
-	font: 14px/1.21 'Helvetica Neue', arial, sans-serif;
+	font: 16px/1.21 'Helvetica Neue', arial, sans-serif;
 	font-weight: 400;
 	color: #444;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	margin: 0;
 	padding-top: 56px;
+	height: 100%;
+}
+
+.app {
+	height: 100%;
 }
 
 .main {
-	max-width: 600px;
+	max-width: $width;
 	margin: 0 auto;
+	display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 
 @import './components/header/style';

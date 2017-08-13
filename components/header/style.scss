@@ -1,47 +1,65 @@
-.header {
+.header__wrap {
+	background: $color-primary;
 	position: fixed;
 	left: 0;
 	top: 0;
 	width: 100%;
 	height: 56px;
-	padding: 0;
-	background: $color-primary;
 	z-index: 50;
 }
 
-.header h1 {
-	float: left;
+.header {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: $width;
+	margin: 0 auto;
+	padding: 0;
+}
+
+.title {
 	margin: 0;
 	padding: 0 15px;
 	font-size: 24px;
 	line-height: 56px;
 	font-weight: 400;
-	color: #FFF;
+	color: white;
 }
 
-.header nav {
-	float: right;
-	font-size: 100%;
-}
-
-.header nav a {
-	display: inline-block;
-	height: 56px;
-	line-height: 56px;
-	padding: 0 15px;
-	min-width: 50px;
+.help__toggle {
+	appearance: none;
+	background: transparent;
+	display: block;
+	width: 32px;
+	height: 32px;
+	border: 3px solid white;
+	border-radius: 16px;
+	font-size: 25px;
+	font-weight: bold;
 	text-align: center;
-	background: rgba(255,255,255,0);
-	text-decoration: none;
-	color: #FFF;
-	will-change: background-color;
+	color: white;
+	padding: 0;
+	margin: 0 15px;
 }
 
-.header nav a:hover,
-.header nav a:active {
-	background: rgba(0,0,0,0.2);
+.help__window {
+	position: absolute;
+    top: 56px;
+    background: white;
+    width: 100%;
+    height: calc(100vh - 56px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: auto;
 }
 
-.header nav a.active {
-	background: rgba(0,0,0,0.4);
+.help__window--visible {
+	
+}
+
+.help__window--hidden {
+	display: none;
 }
