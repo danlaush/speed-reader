@@ -1,6 +1,6 @@
-export const PlayControls = ({ onChange, speed, reset }) => (
+export const PlayControls = ({ stop, speed, reset }) => (
 	<div class="play-controls">
-		<button onClick={onChange} value="0">Stop</button>
+		<button onClick={stop} value="0">Stop</button>
 		<button onClick={reset} >Reset</button><br />
 		{speed} WPM
 	</div>

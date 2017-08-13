@@ -2,16 +2,21 @@ $color-primary: lightseagreen;
 $color-secondary: crimson;
 $gray: silver;
 
-html, body {
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
 	font: 14px/1.21 'Helvetica Neue', arial, sans-serif;
 	font-weight: 400;
 	color: #444;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	margin: 0;
-}
-
-body {
 	padding-top: 56px;
 }
 

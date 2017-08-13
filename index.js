@@ -18,7 +18,8 @@ export default class App extends Component {
 
 	constructor() {
 		super();
-		this.changeSpeed = this.changeSpeed.bind(this);
+		this.changeSpeed = throttle(this.changeSpeed.bind(this),100);
+		this.stop = this.stop.bind(this);
 		this.reset = this.reset.bind(this);
 		this.updateText = this.updateText.bind(this);
 	}
@@ -30,20 +31,23 @@ export default class App extends Component {
 	}
 
 	changeSpeed(event) {
+		console.log('changeSpeed()');
 		let value = event.target.value,
-			oldSpeed = this.state.speed;
+		oldSpeed = this.state.speed;
 		this.setState({speed:value});
 		if(oldSpeed == 0) this.updateWord();
 	}
 
 	updateWord() {
+		console.log('updateWord()');
+
 		setTimeout(() => {
 			if(this.state.speed<0) {
 				if (this.state.activeNode-1 >= 0)
-	            	this.setState({ activeNode: this.state.activeNode-1 });
+					this.setState({ activeNode: this.state.activeNode-1 });
 			} else {
 				if (this.state.activeNode+1 < this.state.textNodes.length)
-	            	this.setState({ activeNode: this.state.activeNode+1 });
+					this.setState({ activeNode: this.state.activeNode+1 });
 			}
 			this.setState({ percentComplete: Math.round(this.state.activeNode / this.state.textNodes.length * 100) })
 			if(this.state.speed != 0)
@@ -55,7 +59,13 @@ export default class App extends Component {
 		this.reset();
 		this.setState({text: event.target.value});
 		this.setState({
-			textNodes: this.state.text.split(/[ ]+/).filter(Boolean)
+			textNodes: this.state.text.split(/[-\n\s]+/).filter(Boolean)
+		});
+	}
+
+	stop() {
+		this.setState({ 
+			speed: 0
 		});
 	}
 
@@ -71,23 +81,54 @@ export default class App extends Component {
 			<div>
 				<Header />
 				<main class="main">
-					<ProgressBar percentComplete={this.state.percentComplete} />
-					<Word word={this.state.textNodes[this.state.activeNode]} />
+					<ProgressBar 
+						percentComplete={this.state.percentComplete} 
+					/>
+					<Word 
+						word={this.state.textNodes[this.state.activeNode]} 
+					/>
 					<Slider 
 						speed={this.state.speed} 
 						onChange={this.changeSpeed}
-						/>
+					/>
 					<PlayControls 
 						speed={this.state.speed} 
-						onChange={this.changeSpeed}
+						stop={this.stop}
 						reset={this.reset}
-						/>
+					/>
 					<TextArea
 						text={this.state.text}
 						updateText={this.updateText}
-						/>
+					/>
 				</main>
 			</div>
 		);
 	}
+
+}
+
+// Thanks Remy Sharp
+function throttle(fn, threshhold, scope) {
+	console.log('throttle()');
+	threshhold || (threshhold = 250);
+	var last,
+		deferTimer;
+	return function () {
+		console.log('throttle closure');
+		var context = scope || this;
+
+		var now = +new Date,
+		args = arguments;
+		if (last && now < last + threshhold) {
+			// hold on to it
+			clearTimeout(deferTimer);
+			deferTimer = setTimeout(function () {
+				last = now;
+				fn.apply(context, args);
+			}, threshhold);
+		} else {
+			last = now;
+			fn.apply(context, args);
+		}
+	};
 }
