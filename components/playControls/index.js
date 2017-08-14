@@ -1,7 +1,10 @@
-export const PlayControls = ({ start, stop, speed, reset }) => (
+export const PlayControls = ({ start, pause, speed, reset, startState }) => (
 	<div class="play-controls">
-		<button onClick={start}>Start</button>
-		<button onClick={stop}>Stop</button>
+    {startState == true ?
+      <button onClick={pause}>Pause</button>
+    :
+      <button onClick={start}>Start</button>
+    }
 		<button onClick={reset} >Reset</button><br />
 		{speed} WPM
 	</div>
