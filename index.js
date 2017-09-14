@@ -7,6 +7,7 @@ import { PlayControls } from './components/playControls';
 import { ProgressBar } from './components/progressBar';
 import { TextArea } from './components/textArea';
 import queryString from 'query-string';
+import { loadUrl, getUrlContent, processContent } from './helpers/loadUrlContent';
 
 export default class App extends Component {
 	state = {
@@ -34,7 +35,13 @@ export default class App extends Component {
 
 		this.queryParams = queryString.parse(location.search);
 		if(typeof this.queryParams.url === 'string') {
-			this.loadUrl(this.queryParams.url);
+			// this.setState({
+
+			// });
+			let text = loadUrl(this.queryParams.url)
+							.then(getUrlContent)
+							.then(processContent);
+			console.log('text: ', text);
 		}
 	}
 
@@ -101,19 +108,7 @@ export default class App extends Component {
 	}
 
 	loadUrl(urlString) {
-		let url = new URL(urlString)
-		let corsProxyUrl = 'https://cors-anywhere.herokuapp.com/';
-		var self = this;
-
-		if(url.host == 'medium.com') {
-			return fetch(corsProxyUrl + url).then(function(res) {
-				return res.text();
-			}).then(function(html) {
-				let page = new DOMParser().parseFromString(html, 'text/html');
-				let text = page.body.querySelector('.postArticle-content').textContent;
-				self.updateText(text);
-			});
-		}
+		
 	}
 
 	render(props) {
