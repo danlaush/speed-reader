@@ -7,7 +7,7 @@ import { PlayControls } from './components/playControls';
 import { ProgressBar } from './components/progressBar';
 import { TextArea } from './components/textArea';
 import queryString from 'query-string';
-import { loadUrl, getUrlContent, processContent } from './helpers/loadUrlContent';
+import { loadUrlContent } from './helpers/loadUrlContent';
 
 export default class App extends Component {
 	state = {
@@ -29,19 +29,18 @@ export default class App extends Component {
 	}
 
 	componentDidMount() {
-		this.setState({
-			textNodes: this.state.text.split(/[ ]+/).filter(Boolean)
-		});
+		var self = this;
 
 		this.queryParams = queryString.parse(location.search);
 		if(typeof this.queryParams.url === 'string') {
-			// this.setState({
-
-			// });
-			let text = loadUrl(this.queryParams.url)
-							.then(getUrlContent)
-							.then(processContent);
-			console.log('text: ', text);
+			let text = loadUrlContent(this.queryParams.url)
+							.then(function(text) {
+								self.updateText(text);
+							});
+		} else {
+			this.setState({
+				textNodes: this.state.text.split(/[ ]+/).filter(Boolean)
+			});
 		}
 	}
 

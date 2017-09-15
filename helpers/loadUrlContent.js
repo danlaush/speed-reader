@@ -1,26 +1,46 @@
-const loadUrl = (urlString) => {
+// TODO: Process this server-side?
+// TODO: Cache URL text on a server
+
+const loadUrlContent = (urlString) => {
 	let url = new URL(urlString)
 	let corsProxyUrl = 'https://cors-anywhere.herokuapp.com/';
 	var self = this;
-	console.log('loadUrl()');
-	return fetch(corsProxyUrl + url);
+	return fetch(corsProxyUrl + url)
+			.then(getUrlContent)
+			.then(processContent);
 }
 
 const getUrlContent = (res)  => {
-	console.log('getUrlContent()');
 	return res.text();
 }
 
 const processContent = (html) => {
-	console.log('processContent()');
-	let page = new DOMParser().parseFromString(html, 'text/html');
-	// if medium.com {
-	let text = page.body.querySelector('.postArticle-content').textContent;
-	// }
-	console.log('second then');
+	let page = new DOMParser().parseFromString(html, 'text/html'),
+		selectors, title, text, elements, elementsArr;
+	title = page.head.querySelector('title').textContent;
+	// if Medium post (Medium posts aren't always on medium.com)
+	if(page.head.querySelector('meta[property="al:ios:app_name"][content="Medium"]')) {
+		selectors = [
+			'.postArticle-content h1',
+			'.postArticle-content h2',
+			'.postArticle-content h3',
+			'.postArticle-content h4',
+			'.postArticle-content h5',
+			'.postArticle-content p',
+		];
+	} else {
+		selectors = ['main'];
+	}
+	elements = page.body.querySelectorAll(selectors.join(', ')),
+	elementsArr = [];
+	for(var i = 0; i < elements.length; ++i) {
+		elementsArr.push(elements[i].textContent);
+	}
+	console.log(elementsArr);
+	text = elementsArr.join(' ');
 	console.log(text);
 	return text;
 }
 
 
-export { loadUrl, getUrlContent, processContent };
+export { loadUrlContent };
