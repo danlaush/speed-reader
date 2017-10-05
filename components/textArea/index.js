@@ -1,6 +1,7 @@
-export const TextArea = ({ text, updateText }) => (
+export const TextArea = ({ text, updateText, title }) => (
 	<div class="text-area">
-		<textarea class="text-area__text" onChange={updateText}>
+		<h2 class="text-area__title">{title}</h2>
+		<textarea class="text-area__text" onInput={updateText}>
 			{text}
 		</textarea>
 

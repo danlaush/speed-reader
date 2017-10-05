@@ -10,6 +10,8 @@ Read documents at lightning speed. A simple Preact app.
 
 Copy and paste some an article you find on the web into the text box. Use the slider in the middle of the screen to adjust the speed at which words are shown to you. You can use the slider to go backwards if you missed something!
 
+Click the Globe icon in the header to autoload the content from a URL. Support must be added per-URL, as every site displays their content differently. Currently supports BBC News, Wired, and Medium.
+
 *KNOWN BUG:* Dragging the slider from the starting position can cause the words to not progress. Start by clicking/tapping somewhere else along the slider, and then drag the slider from there to adjust.
 
 ## Initial code setup

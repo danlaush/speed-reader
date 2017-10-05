@@ -13,6 +13,7 @@ export default class App extends Component {
 	state = {
 		text: "BEIJING — In a diplomatic gamble, President Trump is seeking to enlist China as a peacemaker in the bristling nuclear-edged dispute with North Korea at the very moment he plans to ratchet up conflict with Beijing over trade issues that have animated his political rise. Mr. Trump spoke late Friday with his counterpart, President Xi Jinping of China, to press the Chinese to do more to rein in North Korea as it races toward development of long-range nuclear weapons that could reach the United States. Mr. Xi sought to lower the temperature after Mr. Trump’s vow to rain down “fire and fury” on North Korea, urging restraint and a political solution. But the conversation came as Mr. Trump’s administration was preparing new trade action against China that could inflame the relationship. Mr. Trump plans to return to Washington on Monday to sign a memo determining whether China should be investigated for intellectual property violations, accusing Beijing of failing to curb the theft of trade secrets and rampant online and physical piracy and counterfeiting. An investigation would be intended to lead to retaliatory measures. The White House had planned to take action on intellectual property earlier but held off as it successfully lobbied China to vote at the United Nations Security Council for additional sanctions on North Korea a week ago. Even now, the extra step of determining whether to start the investigation is less than trade hawks might have wanted, but softens the blow to China and gives Mr. Trump a cudgel to hold over it if he does not get the cooperation he wants. While past presidents have tried at least ostensibly to keep security and economic issues on separate tracks in their dealings with China, Mr. Trump has explicitly linked the two, suggesting he would back off from a trade war against Beijing if it does more to pressure North Korea. “If China helps us, I feel a lot differently toward trade, a lot differently toward trade,” he told reporters on Thursday.",
 		textNodes: [],
+		title: 'Example text - a news story',
 		activeNode: 0,
 		speed: 0,
 		percentComplete: 0
@@ -26,6 +27,8 @@ export default class App extends Component {
 		this.stop = this.stop.bind(this);
 		this.reset = this.reset.bind(this);
 		this.updateText = this.updateText.bind(this);
+		this.updateTextArea = this.updateTextArea.bind(this);
+		this.loadUrl = this.loadUrl.bind(this);
 	}
 
 	componentDidMount() {
@@ -33,10 +36,7 @@ export default class App extends Component {
 
 		this.queryParams = queryString.parse(location.search);
 		if(typeof this.queryParams.url === 'string') {
-			let text = loadUrlContent(this.queryParams.url)
-							.then(function(text) {
-								self.updateText(text);
-							});
+			this.loadUrl(this.queryParams.url);
 		} else {
 			this.setState({
 				textNodes: this.state.text.split(/[ ]+/).filter(Boolean)
@@ -69,9 +69,10 @@ export default class App extends Component {
 		}, (60/Math.abs(this.state.speed))*1000);
 	}
 
-	updateText(text) {
+	updateText(text, title) {
 		this.reset();
 		this.setState({text: text});
+		this.setState({title: title || ''});
 		this.setState({
 			textNodes: this.state.text.split(/[-\n\s]+/).filter(Boolean)
 		});
@@ -107,13 +108,19 @@ export default class App extends Component {
 	}
 
 	loadUrl(urlString) {
-		
+		let self = this;
+		loadUrlContent(urlString)
+			.then(function(info) {
+				self.updateText(info.text, info.pageTitle);
+			});
 	}
 
 	render(props) {
 		return (
 			<div class="app">
-				<Header />
+				<Header 
+					loadUrl={this.loadUrl}
+					/>
 				<main class="main">
 					<ProgressBar 
 						percentComplete={this.state.percentComplete} 
@@ -134,6 +141,7 @@ export default class App extends Component {
 					<TextArea
 						text={this.state.text}
 						updateText={this.updateTextArea}
+						title={this.state.title}
 					/>
 				</main>
 			</div>
