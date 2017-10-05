@@ -18,6 +18,7 @@ Click the Globe icon in the header to autoload the content from a URL. Support m
 
 Thanks for wanting to try this out!
 
+Get building
 ```
 git clone https://github.com/danlaush/speed-reader.git
 cd speed-reader
@@ -25,6 +26,9 @@ npm install
 npm install -g preact-cli
 npm run dev
 ```
+
+[Get deploying](https://gist.github.com/hone/24b06869b4c1eca701f9) (to my heroku)
+
 
 ## About tools
 
@@ -44,3 +48,10 @@ This is a work in progress and is currently in the prototype phase. Potential ex
 ## Side note
 
 There are a ton of apps and services already out there that do this. This idea started with seeing a GIF posted to Facebook illustrating the idea of reading quickly one word at a time, and I started building without looking into competitors. 
+
+## Deployment Process
+
+```
+npm run build
+hero static:deploy
+```
