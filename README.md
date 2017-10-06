@@ -12,8 +12,6 @@ Copy and paste some an article you find on the web into the text box. Use the sl
 
 Click the Globe icon in the header to autoload the content from a URL. Support must be added per-URL, as every site displays their content differently. Currently supports BBC News, Wired, and Medium.
 
-*KNOWN BUG:* Dragging the slider from the starting position can cause the words to not progress. Start by clicking/tapping somewhere else along the slider, and then drag the slider from there to adjust.
-
 ## Initial code setup
 
 Thanks for wanting to try this out!

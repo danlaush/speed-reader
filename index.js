@@ -48,7 +48,7 @@ export default class App extends Component {
 		let value = event.target.value,
 		oldSpeed = this.state.speed;
 		this.setState({speed:value});
-		if(oldSpeed == 0) {
+		if(Math.abs(oldSpeed) <= 50) {
 			clearTimeout(this.timer);
 			this.updateWord();
 		}
@@ -76,7 +76,6 @@ export default class App extends Component {
 		this.setState({
 			textNodes: this.state.text.split(/[-\n\s]+/).filter(Boolean)
 		});
-
 	}
 
 	updateTextArea(event) {
