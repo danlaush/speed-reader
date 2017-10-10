@@ -100,6 +100,7 @@ export default class App extends Component {
 
 	reset() {
 		this.setState({ 
+			speed: 0,
 			activeNode: 0,
 			percentComplete: 0
 		});
@@ -108,6 +109,7 @@ export default class App extends Component {
 
 	loadUrl(urlString) {
 		let self = this;
+		self.reset();
 		loadUrlContent(urlString)
 			.then(function(info) {
 				self.updateText(info.text, info.pageTitle);
@@ -119,6 +121,7 @@ export default class App extends Component {
 			<div class="app">
 				<Header 
 					loadUrl={this.loadUrl}
+					stopPlayback={this.stop}
 					/>
 				<main class="main">
 					<ProgressBar 

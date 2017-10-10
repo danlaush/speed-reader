@@ -8,15 +8,18 @@ export default class Header extends Component {
         this.state.showUrl = false;
 		this.toggleUrl = this.toggleUrl.bind(this);
 		this.loadUrl = props.loadUrl;
+		this.stopPlayback = props.stopPlayback;
 		// console.log('this',this);
 		this.getUrl = this.getUrl.bind(this);
     }
 
     toggleHelp() {
+    	this.stopPlayback();
     	this.setState({ showHelp: !this.state.showHelp })
     } 
 
     toggleUrl() {
+    	this.stopPlayback();
     	this.setState({ showUrl: !this.state.showUrl })
     } 
 
