@@ -1,5 +1,11 @@
 .progress-bar {
+	position: relative;
+	height: 16px;
+}
+
+.progress-bar__bar {
 	width: 100%;
+	margin: 3px 0;
 	background-color: $gray;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
@@ -16,4 +22,16 @@
 		position: absolute !important;
 		clip: rect(1px, 1px, 1px, 1px);
 	}
+}
+
+.progress-bar__drag {
+	width: 16px;
+	height: 16px;
+	border-radius: 8px;
+	background-color: #a4a4a4;
+	transform: translateX(-50%);
+	transform-origin: center;
+	position: absolute;
+	left: 0;
+	top: 0;
 }
