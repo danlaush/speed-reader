@@ -15,8 +15,9 @@ export default class App extends Component {
 		textNodes: [],
 		title: 'Example text - a news story',
 		activeNode: 0,
-		speed: 0,
-		percentComplete: 0
+		speed: 1,
+		percentComplete: 0,
+    start: false,
 	};
 
 	constructor() {
@@ -24,7 +25,7 @@ export default class App extends Component {
 		this.timer;
 		this.changeSpeed = throttle(this.changeSpeed.bind(this),100);
 		this.start = this.start.bind(this);
-		this.stop = this.stop.bind(this);
+		this.pause = this.pause.bind(this);
 		this.reset = this.reset.bind(this);
 		this.updateText = this.updateText.bind(this);
 		this.updateTextArea = this.updateTextArea.bind(this);
@@ -83,23 +84,25 @@ export default class App extends Component {
 	}
 
 	start() {
-		if(this.state.speed == 0) {
-			this.setState({
-				speed: 200
-			});
+    if (this.state.start == false) {
+      this.setState({
+        start: true,
+      });
 			this.updateWord();
-		}
+    }
 	}
 
-	stop() {
-		this.setState({ 
-			speed: 0
-		});
-		clearTimeout(this.timer);
+	pause() {
+    if (this.state.start !== false) {
+      this.setState({
+        start: false,
+      });
+		  clearTimeout(this.timer);
+    }
 	}
 
 	reset() {
-		this.setState({ 
+		this.setState({
 			activeNode: 0,
 			percentComplete: 0
 		});
@@ -121,21 +124,22 @@ export default class App extends Component {
 					loadUrl={this.loadUrl}
 					/>
 				<main class="main">
-					<ProgressBar 
-						percentComplete={this.state.percentComplete} 
+					<ProgressBar
+						percentComplete={this.state.percentComplete}
 					/>
-					<Word 
-						word={this.state.textNodes[this.state.activeNode]} 
+					<Word
+						word={this.state.textNodes[this.state.activeNode]}
 					/>
-					<Slider 
-						speed={this.state.speed} 
+					<Slider
+						speed={this.state.speed}
 						onChange={this.changeSpeed}
 					/>
-					<PlayControls 
+					<PlayControls
 						start={this.start}
-						stop={this.stop}
+						pause={this.pause}
 						reset={this.reset}
-						speed={this.state.speed} 
+						speed={this.state.speed}
+            startState={this.state.start}
 					/>
 					<TextArea
 						text={this.state.text}
